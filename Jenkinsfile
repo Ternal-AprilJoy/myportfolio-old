@@ -20,15 +20,15 @@ pipeline {
 
         withCredentials([string(credentialsId: 'azure-storage-key', variable: 'AZ_KEY')]) {
 
-          sh '''
-            az storage file upload-batch \
-              --account-name "$AZ_ACCOUNT" \
-              --account-key "$AZ_KEY" \
-              --destination "$AZ_SHARE" \
-              --source . \
-              --no-progress
-          '''
-
+      sh '''
+az storage file upload-batch \
+  --account-name "$AZ_ACCOUNT" \
+  --account-key "$AZ_KEY" \
+  --destination "$AZ_SHARE" \
+  --source . \
+  --overwrite true \
+  --no-progress
+'''
         }
 
       }
