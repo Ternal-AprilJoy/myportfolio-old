@@ -4,7 +4,7 @@ pipeline {
     environment {
         STORAGE_ACCOUNT = 'apriljoystore2026'
         FILE_SHARE      = 'webcontent'
-        ACI_URL         = 'http://apriljoynginx2026.centralindia.azurecontainer.io'
+       ACI_URL = 'http://apriljoynginx2026.centralindia.azurecontainer.io'
 
         WS1 = '10.0.11.56'
         WS2 = '10.0.12.108'
@@ -20,7 +20,7 @@ pipeline {
             }
         }
 
-    stage('Deploy Staging') {
+stage('Deploy Staging') {
     steps {
         sh '''
         AZ_KEY=$(cat /var/lib/jenkins/secrets/azure.key)
@@ -29,8 +29,7 @@ pipeline {
           --account-name "$STORAGE_ACCOUNT" \
           --account-key "$AZ_KEY" \
           --destination "$FILE_SHARE" \
-          --source . \
-          --overwrite true
+          --source .
         '''
     }
 }
