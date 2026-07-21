@@ -20,20 +20,20 @@ pipeline {
             }
         }
 
-        stage('Deploy Staging') {
-            steps {
-                sh '''
-                AZ_KEY=$(cat /var/lib/jenkins/secrets/azure.key)
+    stage('Deploy Staging') {
+    steps {
+        sh '''
+        AZ_KEY=$(cat /var/lib/jenkins/secrets/azure.key)
 
-                az storage file upload-batch \
-                  --account-name "$STORAGE_ACCOUNT" \
-                  --account-key "$AZ_KEY" \
-                  --destination "$FILE_SHARE" \
-                  --source . \
-                  --overwrite true
-                '''
-            }
-        }
+        /usr/bin/az storage file upload-batch \
+          --account-name "$STORAGE_ACCOUNT" \
+          --account-key "$AZ_KEY" \
+          --destination "$FILE_SHARE" \
+          --source . \
+          --overwrite true
+        '''
+    }
+}
 
         stage('Validate Staging') {
             steps {
