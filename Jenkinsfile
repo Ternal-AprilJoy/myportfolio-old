@@ -23,13 +23,23 @@ pipeline {
 stage('Deploy Staging') {
     steps {
         sh '''
+        rm -rf deploy
+        mkdir deploy
+
+        cp index.html deploy/ 2>/dev/null || true
+        cp *.css deploy/ 2>/dev/null || true
+        cp *.js deploy/ 2>/dev/null || true
+        cp *.ttf deploy/ 2>/dev/null || true
+
+        cp -r images deploy/ 2>/dev/null || true
+
         AZ_KEY=$(cat /var/lib/jenkins/secrets/azure.key)
 
         /usr/bin/az storage file upload-batch \
           --account-name "$STORAGE_ACCOUNT" \
           --account-key "$AZ_KEY" \
           --destination "$FILE_SHARE" \
-          --source .
+          --source deploy
         '''
     }
 }
